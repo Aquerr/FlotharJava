@@ -16,7 +16,7 @@ public class RentalRepositoryImpl implements RentalRepository
     @Override
     public List<Rental> getRentals(LocalDateTime startDate, LocalDateTime endDate)
     {
-        LOGGER.debug("Getting rentals in period from " + startDate + " to " + endDate);
+        LOGGER.info("Getting rentals in period from " + startDate + " to " + endDate);
 
         final EntityManager entityManager = PersistenceHelper.getEntityManager();
         final TypedQuery<Rental> query = entityManager.createQuery("select rental from Rental rental where rental.startDateTime < :startDate and rental.endDateTime < :endDate", Rental.class);
@@ -32,7 +32,7 @@ public class RentalRepositoryImpl implements RentalRepository
     @Override
     public Rental getById(Integer id)
     {
-        LOGGER.debug("Getting rental with id=" + id);
+        LOGGER.info("Getting rental with id=" + id);
 
         final EntityManager entityManager = PersistenceHelper.getEntityManager();
         final Rental rental = entityManager.find(Rental.class, id);
@@ -43,7 +43,7 @@ public class RentalRepositoryImpl implements RentalRepository
     @Override
     public List<Rental> getByCustomerId(Integer customerId)
     {
-        LOGGER.debug("Getting rental by customer id = " + customerId);
+        LOGGER.info("Getting rental by customer id = " + customerId);
 
         final EntityManager entityManager = PersistenceHelper.getEntityManager();
 
@@ -59,7 +59,7 @@ public class RentalRepositoryImpl implements RentalRepository
     @Override
     public void save(Rental rental)
     {
-        LOGGER.debug("Saving rental " + rental);
+        LOGGER.info("Saving rental " + rental);
 
         final EntityManager entityManager = PersistenceHelper.getEntityManager();
         entityManager.getTransaction().begin();
@@ -71,7 +71,7 @@ public class RentalRepositoryImpl implements RentalRepository
     @Override
     public List<Rental> getAllRentals()
     {
-        LOGGER.debug("Getting all rentals");
+        LOGGER.info("Getting all rentals");
 
         final EntityManager entityManager = PersistenceHelper.getEntityManager();
         TypedQuery<Rental> query = entityManager.createQuery("select rental from Rental rental", Rental.class);

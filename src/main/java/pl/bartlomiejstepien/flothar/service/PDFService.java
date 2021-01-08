@@ -1,6 +1,7 @@
 package pl.bartlomiejstepien.flothar.service;
 
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -27,7 +28,7 @@ public class PDFService
         return INSTANCE;
     }
 
-    public void previewPDF() throws IOException
+    public Path previewPDF() throws IOException
     {
         if (Files.notExists(pdfOuputPath))
         {
@@ -54,12 +55,14 @@ public class PDFService
 
         PdfCanvas canvas = new PdfCanvas(pdf.getFirstPage());
         canvas.beginText().setFontAndSize(
-                PdfFontFactory.createFont(FontConstants.HELVETICA), 12)
+                PdfFontFactory.createFont(StandardFonts.HELVETICA), 12)
                 .moveText(265, 597)
                 .showText("I agree to the terms and conditions.")
                 .endText();
 
         document.close();
+
+        return pdfOuputPath.resolve("test.pdf");
     }
 
     public void printPDF()
