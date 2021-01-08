@@ -129,19 +129,7 @@ public class FlotharGUI extends JFrame
         this.rentalList.setLayoutOrientation(JList.VERTICAL);
         this.rentalList.setVisibleRowCount(6);
         this.rentalList.setListData(this.flothar.getAllRentals());
-        this.rentalList.setCellRenderer(new ListCellRenderer<Rental>()
-        {
-            @Override
-            public Component getListCellRendererComponent(JList<? extends Rental> list, Rental value, int index, boolean isSelected, boolean cellHasFocus)
-            {
-                final Label label = new Label(value.getId() + " Rental: " + value.getStartDateTime() + " - " + value.getEndDateTime());
-                label.setForeground(Color.BLACK);
-                label.setFont(Font.getFont("Arial"));
-                label.setBackground(Color.WHITE);
-                return label;
-            }
-        });
-        this.rentalList.setBackground(Color.YELLOW);
+        this.rentalList.setCellRenderer(new RentalListCellRenderer());
         this.rentalList.addMouseListener(new MouseAdapter()
         {
             @Override
@@ -222,5 +210,19 @@ public class FlotharGUI extends JFrame
         //TODO: Show selected rental
 
         LOGGER.debug("Showing information for rental " + rental);
+    }
+
+    private static class RentalListCellRenderer extends JLabel implements ListCellRenderer<Rental>
+    {
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Rental> list, Rental value, int index, boolean isSelected, boolean cellHasFocus)
+        {
+            setText(value.getId() + ". Rental: " + value.getStartDateTime() + " - " + value.getEndDateTime());
+            setForeground(Color.BLACK);
+            setFont(Font.getFont("Arial"));
+            setBackground(Color.WHITE);
+            return this;
+        }
     }
 }
